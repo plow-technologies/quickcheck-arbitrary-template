@@ -1,3 +1,4 @@
+{-# LANGUAGE TemplateHaskell #-}
 module Test.QuickCheck.TH.GeneratorsSpec (tests) where
 
 import Test.QuickCheck.TH.Generators
@@ -9,28 +10,33 @@ import Test.Tasty.HUnit
 import Data.List
 import Data.Ord
 
+
+
+-- | These example types should build arbitrary instances correctly 
+
+data ExampleSumTypes = ExampleSum0 
+                    | ExampleSum1 Int
+                    | ExampleSum2 Int Int
+                    | ExampleSum3 Int Int Int
+                    | ExampleSum4 Int Int Int Int
+                    | ExampleSum5 Int Int Int Int Int
+                    | ExampleSum6 Int Int Int Int Int Int
+                    | ExampleSum7 Int Int Int Int Int Int
+ deriving (Show,Ord,Eq)
+
+makeArbitrary ''ExampleSumTypes
+
+
+instance Arbitrary ExampleSumTypes where
+  arbitrary = arbitraryExampleSumTypes
+
 tests :: TestTree
-tests = testGroup "Tests" [properties, unitTests]
+tests = testGroup "Tests" [properties]
 
 properties :: TestTree
 properties = testGroup "Properties" [qcProps]
 
 qcProps = testGroup "(checked by QuickCheck)"
   [ QC.testProperty "sort == sort . reverse" (
-      \list -> sort (list :: [Int]) == sort (reverse list))
-  , QC.testProperty "Fermat's little theorem" (
-      \x -> ((x :: Integer)^7 - x) `mod` 7 == 0)
-  -- the following property does not hold
-  , QC.testProperty "Fermat's last theorem" (
-      \x y z n ->
-        (n :: Integer) >= 3 QC.==> x^n + y^n /= (z^n :: Integer))
-  ]
+       \list -> sort (list :: [ExampleSumTypes]) == sort (reverse list)) ]
 
-unitTests = testGroup "Unit tests"
-  [ testCase "List comparison (different length)" (
-      [1, 2, 3] `compare` [1,2] @?= GT)
-
-  -- the following test does not hold
-  , testCase "List comparison (same length)" (
-      [1, 2, 3] `compare` [1,2,2] @?= LT)
-  ]
