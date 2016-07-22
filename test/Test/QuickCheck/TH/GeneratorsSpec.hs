@@ -21,7 +21,7 @@ data ExampleSumTypes = ExampleSum0
                     | ExampleSum4 Int Int Int Int
                     | ExampleSum5 Int Int Int Int Int
                     | ExampleSum6 Int Int Int Int Int Int
-                    | ExampleSum7 Int Int Int Int Int Int
+                    | ExampleSum7 Int Int Int Int Int Int Int
  deriving (Show,Ord,Eq)
 
 makeArbitrary ''ExampleSumTypes
