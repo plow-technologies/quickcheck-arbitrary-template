@@ -1,11 +1,13 @@
 Name:                   quickcheck-arbitrary-template
-Version:                0.0.0
+Version:                0.1.0
 Author:                 Scott Murphy <scottmurphy09@gmail.com>
 Maintainer:             Scott Murphy <scottmurphy09@gmail.com>
 License:                BSD3
 License-File:           LICENSE
--- Synopsis:               
--- Description:            
+Synopsis:               Generate QuickCheck Gen for Sum Types
+Description:
+            Building Sum Type arbitrary instance is  kind of a pain
+            This tool helps automate the process
 Cabal-Version:          >= 1.10
 Build-Type:             Simple
 Extra-Source-Files:     README.md, ChangeLog.md
@@ -16,9 +18,8 @@ Library
   GHC-Options:          -Wall
   Exposed-Modules:      Test.QuickCheck.TH.Generators
                         Test.QuickCheck.TH.Generators.Internal
---  Other-Modules:        
+
   Build-Depends:        base >= 4 && < 5
--- Test Suite Code
                       , template-haskell
                       , QuickCheck
 
@@ -41,4 +42,4 @@ Test-Suite spec
 
 Source-Repository head
   Type:                 git
---  Location:             
+  Location:             https://github.com/plow-technologies/quickcheck-arbitrary-template

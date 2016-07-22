@@ -62,7 +62,11 @@ withType name f = do
 
 
 
-
+-- | Make a ('Gen' a) for type 'a'
+-- Currently support arbitrary Sum types up to 7 params
+-- per constructor.
+--
+-- Record Types not currently supported
 makeArbitrary :: Name -> Q [Dec]
 makeArbitrary n = withType n runConstructionApp
   where
@@ -72,6 +76,21 @@ makeArbitrary n = withType n runConstructionApp
 
 
 
+
+-- | build the function taht applys the type constructor
+applyCon :: Name -> [Con] -> DecQ
+applyCon n cons' = valD (varP $ mkName ("arbitrary" <>nameBase n))
+                    (normalB (makeArbList cons')) []
+
+
+-- | select one of the list of generators
+-- Q Exp == oneOf [Gen *]
+makeArbList :: [Con] -> Q Exp
+makeArbList cons' = appE (varE 'oneof)
+                        (listE $ asNormalC applyConExp cons'  )
+
+
+-- | Normal Constructors are the only ones we are considering
 asNormalC  :: ((Name, [StrictType]) -> a) -> [Con] -> [a]
 asNormalC  f cons' = foldr onlyNormalC [] cons'
   where
@@ -79,18 +98,7 @@ asNormalC  f cons' = foldr onlyNormalC [] cons'
     onlyNormalC _ lst = lst
 
 
-makeArbList :: [Con] -> Q Exp
-makeArbList cons' = appE (varE 'oneof)
-                        (listE $ asNormalC applyConExp cons'  )
-
-
-applyCon :: Name -> [Con] -> DecQ
-applyCon n cons' = valD (varP $ mkName ("arbitrary" <>nameBase n))
-                    (normalB (makeArbList cons')) []
-
-
-
-
+-- | This is where we run the sum type thing
 applyConExp :: (Name, [a]) -> ExpQ
 applyConExp deconstructedConstructor = runMapAndApp argCount
   where
