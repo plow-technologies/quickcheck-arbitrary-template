@@ -1,0 +1,35 @@
+
+# This is a default circle.yml that can be used as
+# starting point.
+
+machine:
+  ghc:
+    version: 7.10.2
+
+  environment:
+    PATH: $HOME/.cabal/bin:$CIRCLE_ARTIFACTS:$PATH:$HOME/$CIRCLE_PROJECT_REPONAME/.cabal-sandbox/bin
+
+dependencies:
+  override:
+    - if cabal --version | grep 1.23.0.0; then echo "Version 1.23.0.0"; else cd ~/ && git clone https://github.com/plow-technologies/cabal.git && cd cabal && cabal --no-require-sandbox install -j2 Cabal/ cabal-install/; fi
+    - git clone git@github.com:plow-technologies/plow-scripts.git
+    - cp plow-scripts/config $HOME/.cabal/config
+    - cabal update
+    - cabal sandbox init
+    - cabal install --only-dependencies
+
+test:
+  override:
+    - cabal install --enable-tests
+    - cabal configure --enable-tests
+    - cabal build
+    - ./dist/build/spec/spec
+
+## Uncomment this part if you want automatic Hackage uploads.
+
+# deployment:
+#   staging:
+#     branch: master
+#     commands:
+#       - sh plow-scripts/hackage.sh
+
