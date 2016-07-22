@@ -120,7 +120,6 @@ applyConExp deconstructedConstructor = runMapAndApp argCount
 arbReturn :: a -> Gen a
 arbReturn = return 
 
--- arbitraryMap f =  f <$> arbitrary
 
 
 
