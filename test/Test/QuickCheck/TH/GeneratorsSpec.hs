@@ -6,7 +6,7 @@ import Test.QuickCheck.TH.Generators
 import Test.Tasty
 import Test.Tasty.QuickCheck as QC
 import Test.Tasty.HUnit
-
+import Language.Haskell.TH
 import Data.List
 import Data.Ord
 
@@ -24,11 +24,19 @@ data ExampleSumTypes = ExampleSum0
                     | ExampleSum7 Int Int Int Int Int Int Int
  deriving (Show,Ord,Eq)
 
-makeArbitrary ''ExampleSumTypes
+data ExampleProductType = ExampleProductType { field1 :: Int,
+                                            field2 :: Int }
+  deriving (Show,Ord,Eq)
 
+makeArbitrary ''ExampleSumTypes
+makeArbitrary ''ExampleProductType
 
 instance Arbitrary ExampleSumTypes where
   arbitrary = arbitraryExampleSumTypes
+
+instance Arbitrary ExampleProductType where
+  arbitrary = arbitraryExampleProductType
+
 
 tests :: TestTree
 tests = testGroup "Tests" [properties]
@@ -37,6 +45,8 @@ properties :: TestTree
 properties = testGroup "Properties" [qcProps]
 
 qcProps = testGroup "(checked by QuickCheck)"
-  [ QC.testProperty "sort == sort . reverse" (
-       \list -> sort (list :: [ExampleSumTypes]) == sort (reverse list)) ]
+  [ QC.testProperty "ExampleSumTypes sort == sort . reverse" (
+       \list -> sort (list :: [ExampleSumTypes]) == sort (reverse list)) ,
+    QC.testProperty "ExampleProductTypes sort == sort . reverse" (
+       \list -> sort (list :: [ExampleProductType]) == sort (reverse list)) ]
 

@@ -87,19 +87,24 @@ applyCon n cons' = valD (varP $ mkName ("arbitrary" <>nameBase n))
 -- Q Exp == oneOf [Gen *]
 makeArbList :: [Con] -> Q Exp
 makeArbList cons' = appE (varE 'oneof)
-                        (listE $ asNormalC applyConExp cons'  )
+                        (listE $ asNormalOrRecC applyConExp cons'  )
 
+{-
+RecC Test.QuickCheck.TH.GeneratorsSpec.ExampleProductType [(Test.QuickCheck.TH.GeneratorsSpec.field1,NotStrict,ConT GHC.Types.Int),(Test.QuickCheck.TH.GeneratorsSpec.field2,NotStrict,ConT GHC.Types.Int)]
+
+-}
 
 -- | Normal Constructors are the only ones we are considering
-asNormalC  :: ((Name, [StrictType]) -> a) -> [Con] -> [a]
-asNormalC  f cons' = foldr onlyNormalC [] cons'
+asNormalOrRecC  :: ((Name, [StrictType]) -> a) -> [Con] -> [a]
+asNormalOrRecC  f cons' = foldr decodeC [] cons'
   where
-    onlyNormalC (NormalC n l) lst = (f (n,l)) : lst
-    onlyNormalC _ lst = lst
-
+   decodeC (RecC n l)   lst  = (f (n, varStrictToStrict <$>  l)) : lst
+   decodeC (NormalC n l) lst = (f (n, l)) : lst
+   decodeC _ lst = lst
+   varStrictToStrict (_ , s,t) = (s,t)
 
 -- | This is where we run the sum type thing
-applyConExp :: (Name, [a]) -> ExpQ
+applyConExp :: (Name, [StrictType]) -> ExpQ
 applyConExp deconstructedConstructor = runMapAndApp argCount
   where
     conName = fst deconstructedConstructor  
