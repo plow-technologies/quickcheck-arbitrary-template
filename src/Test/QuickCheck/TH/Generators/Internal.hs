@@ -111,21 +111,33 @@ applyConExp deconstructedConstructor = runMapAndApp argCount
     argCount = fromIntegral . length . snd $ deconstructedConstructor :: Integer
 
     runMapAndApp :: Integer -> ExpQ                      
-    runMapAndApp 0 = appE (varE 'arbReturn ) (conE conName)
-    runMapAndApp 1 = appE (varE 'buildArb1 ) (conE conName)
-    runMapAndApp 2 = appE (varE 'buildArb2 ) (conE conName)
-    runMapAndApp 3 = appE (varE 'buildArb3 ) (conE conName)
-    runMapAndApp 4 = appE (varE 'buildArb4 ) (conE conName)
-    runMapAndApp 5 = appE (varE 'buildArb5 ) (conE conName)
-    runMapAndApp 6 = appE (varE 'buildArb6 ) (conE conName)
-    runMapAndApp 7 = appE (varE 'buildArb7 ) (conE conName)
-    runMapAndApp _ = error "Arbitrary TypeConstructors only defined for 7 or fewer"
+    runMapAndApp 0  = appE (varE 'arbReturn ) (conE conName)
+    runMapAndApp 1  = appE (varE 'buildArb1 ) (conE conName)
+    runMapAndApp 2  = appE (varE 'buildArb2 ) (conE conName)
+    runMapAndApp 3  = appE (varE 'buildArb3 ) (conE conName)
+    runMapAndApp 4  = appE (varE 'buildArb4 ) (conE conName)
+    runMapAndApp 5  = appE (varE 'buildArb5 ) (conE conName)
+    runMapAndApp 6  = appE (varE 'buildArb6 ) (conE conName)
+    runMapAndApp 7  = appE (varE 'buildArb7 ) (conE conName)
+    runMapAndApp 8  = appE (varE 'buildArb7 ) (conE conName)
+    runMapAndApp 9  = appE (varE 'buildArb7 ) (conE conName)
+    runMapAndApp 10 = appE (varE 'buildArb7 ) (conE conName)
+    runMapAndApp 11 = appE (varE 'buildArb7 ) (conE conName)
+    runMapAndApp 12 = appE (varE 'buildArb7 ) (conE conName)
+    runMapAndApp 13 = appE (varE 'buildArb7 ) (conE conName)
+    runMapAndApp 14 = appE (varE 'buildArb7 ) (conE conName)
+    runMapAndApp _  = error "Arbitrary TypeConstructors only defined for 13 or fewer"
 
 
 arbReturn :: a -> Gen a
 arbReturn = return 
 
 
+
+
+-- | buildArbN family
+-- These functons define application of an arbitary function to a
+-- product of up to 13 types
 
 
 buildArb1 :: Arbitrary a => (a -> b)  -> Gen b
@@ -164,9 +176,144 @@ buildArb6 f = f <$>  arbitrary <*>
 buildArb7  :: (Arbitrary a, Arbitrary a1, Arbitrary a2, Arbitrary a3, Arbitrary a4, Arbitrary a5, Arbitrary a6) =>
              (a6 -> a5 -> a4 -> a3 -> a2 -> a1 -> a -> b) -> Gen b
 buildArb7 f = f <$>  arbitrary <*>
+                    arbitrary <*> 
+                    arbitrary <*> 
+                    arbitrary <*> 
+                    arbitrary <*>
+                    arbitrary <*>
+                    arbitrary 
+
+
+
+buildArb8  :: (Arbitrary a, Arbitrary a1, Arbitrary a2, Arbitrary a3,
+             Arbitrary a4, Arbitrary a5, Arbitrary a6, Arbitrary a7) =>
+             (a7 -> a6 -> a5 -> a4 -> a3 -> a2 -> a1 -> a -> b) -> Gen b
+buildArb8 f = f <$>  arbitrary <*>
+                    arbitrary <*> 
+                    arbitrary <*> 
+                    arbitrary <*> 
+                    arbitrary <*>
+                    arbitrary <*>
+                    arbitrary <*>
+                    arbitrary
+
+
+buildArb9
+  :: (Arbitrary a, Arbitrary a1, Arbitrary a2, Arbitrary a3,
+      Arbitrary a4, Arbitrary a5, Arbitrary a6, Arbitrary a7,
+      Arbitrary a8) =>
+     (a8 -> a7 -> a6 -> a5 -> a4 -> a3 -> a2 -> a1 -> a -> b) -> Gen b
+buildArb9 f = f <$>   arbitrary <*>
                      arbitrary <*> 
                      arbitrary <*> 
                      arbitrary <*> 
                      arbitrary <*>
                      arbitrary <*>
-                     arbitrary 
+                     arbitrary <*>
+                     arbitrary <*>
+                     arbitrary
+
+
+buildArb10
+  :: (Arbitrary a, Arbitrary a1, Arbitrary a2, Arbitrary a3,
+      Arbitrary a4, Arbitrary a5, Arbitrary a6, Arbitrary a7,
+      Arbitrary a8, Arbitrary a9) =>
+     (a9 -> a8 -> a7 -> a6 -> a5 -> a4 -> a3 -> a2 -> a1 -> a -> b)
+     -> Gen b
+buildArb10 f = f <$>  arbitrary <*>
+                     arbitrary <*> 
+                     arbitrary <*> 
+                     arbitrary <*> 
+                     arbitrary <*>
+                     arbitrary <*>
+                     arbitrary <*>
+                     arbitrary <*>
+                     arbitrary <*>
+                     arbitrary
+
+
+buildArb11
+  :: (Arbitrary a, Arbitrary a1, Arbitrary a2, Arbitrary a3,
+      Arbitrary a4, Arbitrary a5, Arbitrary a6, Arbitrary a7,
+      Arbitrary a8, Arbitrary a9, Arbitrary a10) =>
+     (a10
+      -> a9 -> a8 -> a7 -> a6 -> a5 -> a4 -> a3 -> a2 -> a1 -> a -> b)
+     -> Gen b
+buildArb11 f = f <$>  arbitrary <*>
+                     arbitrary <*> 
+                     arbitrary <*> 
+                     arbitrary <*> 
+                     arbitrary <*>
+                     arbitrary <*>
+                     arbitrary <*>
+                     arbitrary <*>
+                     arbitrary <*>
+                     arbitrary <*>
+                     arbitrary
+
+
+buildArb12
+  :: (Arbitrary a, Arbitrary a1, Arbitrary a2, Arbitrary a3,
+      Arbitrary a4, Arbitrary a5, Arbitrary a6, Arbitrary a7,
+      Arbitrary a8, Arbitrary a9, Arbitrary a10, Arbitrary a11) =>
+     (a11
+      -> a10
+      -> a9
+      -> a8
+      -> a7
+      -> a6
+      -> a5
+      -> a4
+      -> a3
+      -> a2
+      -> a1
+      -> a
+      -> b)
+     -> Gen b
+buildArb12 f = f <$>  arbitrary <*>
+                      arbitrary <*> 
+                      arbitrary <*> 
+                      arbitrary <*> 
+                      arbitrary <*>
+                      arbitrary <*>
+                      arbitrary <*>
+                      arbitrary <*>
+                      arbitrary <*>
+                      arbitrary <*>
+                      arbitrary <*>
+                      arbitrary
+
+
+buildArb13
+  :: (Arbitrary a, Arbitrary a1, Arbitrary a2, Arbitrary a3,
+      Arbitrary a4, Arbitrary a5, Arbitrary a6, Arbitrary a7,
+      Arbitrary a8, Arbitrary a9, Arbitrary a10, Arbitrary a11,
+      Arbitrary a12) =>
+     (a12
+      -> a11
+      -> a10
+      -> a9
+      -> a8
+      -> a7
+      -> a6
+      -> a5
+      -> a4
+      -> a3
+      -> a2
+      -> a1
+      -> a
+      -> b)
+     -> Gen b
+buildArb13 f = f <$>  arbitrary <*>
+                      arbitrary <*> 
+                      arbitrary <*> 
+                      arbitrary <*> 
+                      arbitrary <*>
+                      arbitrary <*>
+                      arbitrary <*>
+                      arbitrary <*>
+                      arbitrary <*>
+                      arbitrary <*>
+                      arbitrary <*>
+                      arbitrary <*>
+                      arbitrary
