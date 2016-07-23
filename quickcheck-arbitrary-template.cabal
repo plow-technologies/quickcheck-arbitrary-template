@@ -19,10 +19,10 @@ Library
                         Test.QuickCheck.TH.Generators.Internal
                         Test.QuickCheck.TH.Generators.Internal.BuildArbitrary
 
-
   Build-Depends:        base >= 4 && < 5
-                      , template-haskell
                       , QuickCheck
+                      , safe
+                      , template-haskell
 
 
 Test-Suite spec
@@ -33,12 +33,13 @@ Test-Suite spec
   Ghc-Options:          -Wall
   Main-Is:              Spec.hs
   Build-Depends:        base
+                      , QuickCheck
+                      , safe
                       , template-haskell
                       , tasty
                       , tasty-golden
                       , tasty-hunit
                       , tasty-quickcheck
-                      , QuickCheck
 
 Source-Repository head
   Type:                 git
