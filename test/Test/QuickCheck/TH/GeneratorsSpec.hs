@@ -29,26 +29,26 @@ data ExampleSumTypes = ExampleSum0
  deriving (Show,Ord,Eq)
 
 data ExampleProductType = ExampleProductType {
-  field0 :: Int
-, field1 :: Int
-, field2 :: Int
-, field3 :: Int
-, field4 :: Int
-, field5 :: Int
-, field6 :: Int
-, field7 :: Int
-, field8 :: Int
-, field9 :: Int
-, field10 :: Int
-, field11 :: Int
-, field12 :: Int
-, field13 :: Int
-, field14 :: Int
-, field15 :: Int
-, field16 :: Int
-, field17 :: Int
-, field18 :: Int
-, field19 :: Int
+  _field0 :: Int
+, _field1 :: Int
+, _field2 :: Int
+, _field3 :: Int
+, _field4 :: Int
+, _field5 :: Int
+, _field6 :: Int
+, _field7 :: Int
+, _field8 :: Int
+, _field9 :: Int
+, _field10 :: Int
+, _field11 :: Int
+, _field12 :: Int
+, _field13 :: Int
+, _field14 :: Int
+, _field15 :: Int
+, _field16 :: Int
+, _field17 :: Int
+, _field18 :: Int
+, _field19 :: Int
 
 } deriving (Show,Ord,Eq)
 
