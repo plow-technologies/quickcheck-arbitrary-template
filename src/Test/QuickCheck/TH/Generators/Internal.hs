@@ -70,12 +70,15 @@ makeArbitrary n = withType n runConstructionApp
   where
     runConstructionApp _  con = do
                          dec <- applyCon n con
-                         return [dec]
+                         return dec
 
 -- | build the function taht applys the type constructor
-applyCon :: Name -> [Con] -> DecQ
-applyCon n cons' = valD (varP $ mkName ("arbitrary" <>nameBase n))
-                    (normalB (makeArbList cons')) []
+applyCon :: Name -> [Con] -> DecsQ
+applyCon n cons' = sequence [signature,value]
+  where
+    signature = sigD finalFunctionName (appT (conT ''Gen) (conT n))
+    value =   valD (varP finalFunctionName) (normalB (makeArbList cons')) []
+    finalFunctionName = mkName ("arbitrary" <> nameBase n)
 
 
 -- | select one of the list of generators
