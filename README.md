@@ -9,8 +9,8 @@ Which builds, a generator that can be used to create an arbitrary instance.
 
 It does not create the instance directly for you.  
 
-Currently it supports creating sum types only.
-Also, each constructor may have at most 7 arguments.
+It supports creating sum types and record types
+each constructor may have at most 7 arguments.
 
 ## Installation
 
