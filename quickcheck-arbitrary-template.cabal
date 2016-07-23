@@ -5,9 +5,8 @@ Maintainer:             Scott Murphy <scottmurphy09@gmail.com>
 License:                BSD3
 License-File:           LICENSE
 Synopsis:               Generate QuickCheck Gen for Sum Types
-Description:
-            Building Sum Type arbitrary instance is  kind of a pain
-            This tool helps automate the process
+Description:            Building Sum Type arbitrary instance is kind of a pain
+                        This tool helps automate the process
 Cabal-Version:          >= 1.10
 Build-Type:             Simple
 Extra-Source-Files:     README.md, ChangeLog.md
@@ -18,10 +17,12 @@ Library
   GHC-Options:          -Wall
   Exposed-Modules:      Test.QuickCheck.TH.Generators
                         Test.QuickCheck.TH.Generators.Internal
+                        Test.QuickCheck.TH.Generators.Internal.BuildArbitrary
 
   Build-Depends:        base >= 4 && < 5
-                      , template-haskell
                       , QuickCheck
+                      , safe
+                      , template-haskell
 
 
 Test-Suite spec
@@ -32,13 +33,13 @@ Test-Suite spec
   Ghc-Options:          -Wall
   Main-Is:              Spec.hs
   Build-Depends:        base
+                      , QuickCheck
+                      , safe
                       , template-haskell
-                      , tasty                      
+                      , tasty
                       , tasty-golden
                       , tasty-hunit
                       , tasty-quickcheck
-                      , QuickCheck
-                      
 
 Source-Repository head
   Type:                 git
