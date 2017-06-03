@@ -25,7 +25,7 @@ Library
   Build-Depends:        base >= 4 && < 5
                       , QuickCheck
                       , safe
-                      , template-haskell
+                      , template-haskell < 2.11
 
 
 Test-Suite spec
