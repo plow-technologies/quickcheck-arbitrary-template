@@ -72,7 +72,7 @@ makeArbitrary n = withType n runConstructionApp
                          dec <- applyCon n con
                          return dec
 
--- | build the function taht applys the type constructor
+-- | build the function that applies the type constructor
 applyCon :: Name -> [Con] -> DecsQ
 applyCon n cons' = sequence [signature,value]
   where
@@ -85,7 +85,7 @@ applyCon n cons' = sequence [signature,value]
 -- Q Exp == oneOf [Gen *]
 makeArbList :: [Con] -> Q Exp
 makeArbList cons' = appE (varE 'oneof)
-                        (listE $ asNormalOrRecC applyConExp cons'  )
+                         (listE $ asNormalOrRecC applyConExp cons')
 
 -- | Normal Constructors are the only ones we are considering
 asNormalOrRecC  :: ((Name, [StrictType]) -> a) -> [Con] -> [a]
