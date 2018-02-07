@@ -38,7 +38,7 @@ Test-Suite spec
   Build-Depends:        base
                       , QuickCheck
                       , safe
-                      , template-haskell
+                      , template-haskell >= 2.11 && < 2.13
                       , tasty
                       , tasty-golden
                       , tasty-hunit

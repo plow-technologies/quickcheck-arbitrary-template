@@ -51,8 +51,8 @@ withType name f = do
     case info of
       TyConI dec ->
         case dec of
-          DataD    _ _ tvbs cons' _ -> f tvbs cons'
-          NewtypeD _ _ tvbs con  _ -> f tvbs [con]
+          DataD    _ _ tvbs _ cons' _ -> f tvbs cons'
+          NewtypeD _ _ tvbs _ con  _ -> f tvbs [con]
           other -> error $ "Example.TH.withType: Unsupported type: "
                           ++ show other
       _ -> error "Example.TH.withType: I need the name of a type."
