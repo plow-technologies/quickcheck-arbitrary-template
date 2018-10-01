@@ -15,9 +15,9 @@ extra-source-files:
 
 dependencies:
 - base >= 4 && < 5
-- QuickCheck  
+- QuickCheck
 - safe
-- template-haskell >= 2.11 && < 2.13
+- template-haskell >= 2.11 && < 2.14
 ghc-options:
 - -Wall
 #- -Werror
