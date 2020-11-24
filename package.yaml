@@ -1,5 +1,5 @@
 name: quickcheck-arbitrary-template
-version: 0.2.1.0
+version: 0.2.1.1
 synopsis: Generate QuickCheck Gen for Sum Types
 description: Building Sum Type arbitrary instance is kind of a pain. This tool helps automate the process.
 homepage: https://github.com/plow-technologies/quickcheck-arbitrary-template#readme
@@ -15,12 +15,12 @@ extra-source-files:
 
 dependencies:
 - base >= 4 && < 5
-- QuickCheck  
+- QuickCheck
 - safe
-- template-haskell >= 2.11 && < 2.15
+- template-haskell >= 2.11 && < 2.17
 ghc-options:
 - -Wall
-- -Werror
+- -Wwarn
 
 library:
   source-dirs: src
